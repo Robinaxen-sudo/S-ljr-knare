@@ -131,30 +131,31 @@ input[type="number"]{
 <h1>Säljräknare</h1>
 
 <div class="card">
+    <h3>Datum för säljrunda</h3>
+    <input type="date" id="datum">
+</div>
+
+<div class="card">
 
     <h3>Plats</h3>
 
     <input
         type="text"
         id="plats"
-        placeholder="Ex. Norrköping"
-        style="
-        width:90%;
-        padding:12px;
-        font-size:18px;
-        border-radius:10px;
-        border:1px solid #ccc;
-        ">
+        placeholder="Ex. Eneby">
 
     <br><br>
 
     <button
         class="spara"
         onclick="hamtaPlats()">
+
         📍 Hämta GPS-position
+
     </button>
 
 </div>
+
 
     
 <div class="card">
@@ -343,6 +344,8 @@ function minusSignerade(){
 }
 
 function sparaRunda(){
+    console.log("SparaRunda startar");
+
 const plats =
 document.getElementById("plats").value;
 
@@ -357,6 +360,7 @@ document.getElementById("plats").value;
         procent =
         ((signerade / fragade) * 100).toFixed(1);
 
+        console.log("Runda sparad");
     }
 
     rundor.unshift({
