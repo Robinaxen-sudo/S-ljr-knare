@@ -343,6 +343,8 @@ function minusSignerade(){
 }
 
 function sparaRunda(){
+const plats =
+document.getElementById("plats").value;
 
     const datum =
     document.getElementById("datum").value;
@@ -356,18 +358,17 @@ function sparaRunda(){
         ((signerade / fragade) * 100).toFixed(1);
 
     }
-const plats =
-document.getElementById("plats").value;
 
     rundor.unshift({
 
-    datum,
-    plats,
-    fragade,
-    signerade,
+    datum: datum,
+    plats: plats,
+    fragade: fragade,
+    signerade: signerade,
     konvertering: procent
 
 });
+
 
 
     localStorage.setItem(
