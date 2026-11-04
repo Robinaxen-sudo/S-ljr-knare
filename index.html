@@ -137,6 +137,33 @@ input[type="number"]{
 
 <div class="card">
 
+    <h3>Plats</h3>
+
+    <input
+        type="text"
+        id="plats"
+        placeholder="Ex. Eneby, Vilbergen eller Ringdansgatan"
+        style="
+        width:90%;
+        padding:12px;
+        font-size:18px;
+        border-radius:10px;
+        border:1px solid #ccc;
+        ">
+
+    <br><br>
+
+    <button
+        class="spara"
+        onclick="hamtaPlats()">
+        📍 Hämta GPS-position
+    </button>
+
+</div>
+
+    
+<div class="card">
+
     <h2>Frågade</h2>
 
     <div id="fragade" class="siffra">0</div>
@@ -493,6 +520,41 @@ function aterstall(){
 uppdatera();
 visaHistorik();
 
+ function hamtaPlats(){
+
+    if(!navigator.geolocation){
+
+        alert("GPS stöds inte.");
+        return;
+
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            const lat =
+            position.coords.latitude.toFixed(5);
+
+            const lon =
+            position.coords.longitude.toFixed(5);
+
+            document.getElementById("plats").value =
+            lat + ", " + lon;
+
+        },
+
+        function(){
+
+            alert("Kunde inte hämta position.");
+
+        }
+
+    );
+
+}
+   
+    
 </script>
 
 </body>
