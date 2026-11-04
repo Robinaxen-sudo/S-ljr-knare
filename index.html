@@ -4,54 +4,496 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Säljräknare</title>
-<style>body{background:#ffffff;color:#000;font-family:Arial,sans-serif;text-align:center;padding:15px;margin:0}h1{margin-bottom:20px}.card{border:1px solid #ddd;border-radius:12px;padding:15px;margin:15px auto;max-width:500px}.siffra{font-size:60px;font-weight:bold;margin:15px 0}button{font-size:22px;padding:12px 18px;margin:5px;border:none;border-radius:10px;cursor:pointer}.plus{background:#22c55e;color:white}.minus{background:#f59e0b;color:white}.spara{background:#2563eb;color:white;width:90%}.reset{background:#ef4444;color:white;width:90%}.radera{background:#dc2626;color:white;padding:8px 12px;font-size:16px}input[type=date]{width:90%;padding:10px;font-size:18px}.runda{border:1px solid #ccc;background:#f8f8f8;border-radius:10px;padding:10px;margin-top:10px;text-align:left}</style>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    text-align:center;
+    background:#fff;
+    margin:0;
+    padding:15px;
+}
+
+.card{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:15px;
+    margin:15px auto;
+    max-width:500px;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+.siffra{
+    font-size:60px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+#fragade{
+    font-size:90px;
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.plus{
+    background:#22c55e;
+    color:white;
+}
+
+.minus{
+    background:#f59e0b;
+    color:white;
+}
+
+.spara{
+    background:#2563eb;
+    color:white;
+    width:90%;
+    padding:15px;
+    font-size:22px;
+}
+
+.reset{
+    background:#ef4444;
+    color:white;
+    width:90%;
+    padding:15px;
+    font-size:22px;
+}
+
+.radera{
+    background:#dc2626;
+    color:white;
+    padding:10px;
+    font-size:16px;
+}
+
+.plusFragade{
+    background:#22c55e;
+    color:white;
+    font-size:70px;
+    padding:30px 70px;
+    width:100%;
+    max-width:400px;
+    font-weight:bold;
+}
+
+.minusFragade{
+    background:#f59e0b;
+    color:white;
+    font-size:40px;
+    padding:20px 35px;
+    font-weight:bold;
+}
+
+.normalKnapp{
+    font-size:30px;
+    padding:15px 25px;
+}
+
+input[type="date"]{
+    width:90%;
+    padding:10px;
+    font-size:18px;
+}
+
+input[type="number"]{
+    width:220px;
+    padding:15px;
+    font-size:22px;
+    text-align:center;
+    border:1px solid #ccc;
+    border-radius:10px;
+}
+
+.runda{
+    border:1px solid #ccc;
+    border-radius:10px;
+    background:#f8f8f8;
+    padding:10px;
+    margin-top:10px;
+    text-align:left;
+}
+
+</style>
 </head>
+
 <body>
+
 <h1>Säljräknare</h1>
-<div class="card"><h3>Datum för säljrunda</h3><input type="date" id="datum"></div>
-<div class="card"><h2>Frågade</h2><div id="fragade" class="siffra">0</div><button class="minus" onclick="minusFragade()">−</button><button class="plus" onclick="plusFragade()">+</button></div>
+
 <div class="card">
-
-<h2 style="font-size:38px;">Frågade</h2>
-
-<div
-id="fragade"
-class="siffra"
-style="font-size:90px;">
-0
+    <h3>Datum för säljrunda</h3>
+    <input type="date" id="datum">
 </div>
 
-<button class="minus" onclick="minusFragade()">−</button>
-<button class="plus" onclick="plusFragade()">+</button>
+<div class="card">
+
+    <h2>Frågade</h2>
+
+    <div id="fragade" class="siffra">0</div>
+
+    <button class="minusFragade" onclick="minusFragade()">−</button>
+
+    <br><br>
+
+    <button class="plusFragade" onclick="plusFragade()">+</button>
+
+    <br><br>
+
+    <input
+        type="number"
+        id="laggTillFragade"
+        min="1"
+        placeholder="Antal personer">
+
+    <br><br>
+
+    <button
+        class="plus normalKnapp"
+        onclick="laggTillFragadeAntal()">
+        Lägg till antal
+    </button>
+
+</div>
+
+<div class="card">
+
+    <h2>Signerade</h2>
+
+    <div id="signerade" class="siffra">0</div>
+
+    <button
+        class="minus normalKnapp"
+        onclick="minusSignerade()">
+        −
+    </button>
+
+    <button
+        class="plus normalKnapp"
+        onclick="plusSignerade()">
+        +
+    </button>
+
+</div>
+
+<div class="card">
+
+    <h2>Konvertering</h2>
+
+    <div id="konvertering" class="siffra">
+        0%
+    </div>
+
+</div>
+
+<button class="spara" onclick="sparaRunda()">
+💾 Spara säljrunda
+</button>
 
 <br><br>
 
-<input
-type="number"
-id="laggTillFragade"
-placeholder="Antal personer"
-min="1"
-style="
-width:220px;
-padding:12px;
-font-size:22px;
-text-align:center;
-">
-
-<button
-class="plus"
-onclick="laggTillFragadeAntal()">
-Lägg till
+<button class="spara" onclick="exporteraCSV()">
+📄 Exportera till Excel (CSV)
 </button>
 
-</div>
+<br><br>
 
-<div class="card"><h2>Konvertering</h2><div id="konvertering" class="siffra">0%</div></div>
-<button class="spara" onclick="sparaRunda()">💾 Spara säljrunda</button><br><br>
-<button class="reset" onclick="aterstall()">🔄 Återställ aktuell runda</button>
+<button class="reset" onclick="aterstall()">
+🔄 Återställ aktuell runda
+</button>
+
 <div id="historik"></div>
+
 <script>
-let fragade=parseInt(localStorage.getItem('fragade'))||0;let signerade=parseInt(localStorage.getItem('signerade'))||0;let rundor=JSON.parse(localStorage.getItem('rundor'))||[];document.getElementById('datum').value=new Date().toISOString().split('T')[0];function sparaData(){localStorage.setItem('fragade',fragade);localStorage.setItem('signerade',signerade)}function uppdatera(){document.getElementById('fragade').innerHTML=fragade;document.getElementById('signerade').innerHTML=signerade;let procent=0;if(fragade>0){procent=((signerade/fragade)*100).toFixed(1)}document.getElementById('konvertering').innerHTML=procent+'%';sparaData()}function plusFragade(){fragade++;uppdatera()}function minusFragade(){if(fragade>0){fragade--;uppdatera()}}function plusSignerade(){signerade++;uppdatera()}function minusSignerade(){if(signerade>0){signerade--;uppdatera()}}function sparaRunda(){let datum=document.getElementById('datum').value;if(!datum){datum=new Date().toISOString().split('T')[0]}let procent=0;if(fragade>0){procent=((signerade/fragade)*100).toFixed(1)}rundor.unshift({datum:datum,fragade:fragade,signerade:signerade,konvertering:procent});localStorage.setItem('rundor',JSON.stringify(rundor));visaHistorik();fragade=0;signerade=0;uppdatera();alert('Säljrunda sparad!')}function raderaRunda(index){if(confirm('Radera denna säljrunda?')){rundor.splice(index,1);localStorage.setItem('rundor',JSON.stringify(rundor));visaHistorik()}}function raderaAllaRundor(){if(confirm('Radera ALLA sparade rundor?')){rundor=[];localStorage.removeItem('rundor');visaHistorik()}}function visaHistorik(){let html=`<div class="card"><h2>Tidigare säljrundor</h2><button class="reset" onclick="raderaAllaRundor()">🗑️ Radera alla rundor</button>`;rundor.forEach(function(runda,index){html+=`<div class="runda"><strong>${runda.datum}</strong><br><br>Frågade: ${runda.fragade}<br>Signerade: ${runda.signerade}<br>Konvertering: ${runda.konvertering}%<br><br><button class="radera" onclick="raderaRunda(${index})">🗑️ Radera</button></div>`});html+=`</div>`;document.getElementById('historik').innerHTML=html}function aterstall(){if(confirm('Nollställa aktuell runda?')){fragade=0;signerade=0;uppdatera()}}uppdatera();visaHistorik();
+
+let fragade =
+parseInt(localStorage.getItem("fragade")) || 0;
+
+let signerade =
+parseInt(localStorage.getItem("signerade")) || 0;
+
+let rundor =
+JSON.parse(localStorage.getItem("rundor")) || [];
+
+document.getElementById("datum").value =
+new Date().toISOString().split("T")[0];
+
+function sparaData(){
+
+    localStorage.setItem("fragade", fragade);
+    localStorage.setItem("signerade", signerade);
+
+}
+
+function uppdatera(){
+
+    document.getElementById("fragade").innerHTML =
+    fragade;
+
+    document.getElementById("signerade").innerHTML =
+    signerade;
+
+    let procent = 0;
+
+    if(fragade > 0){
+
+        procent =
+        ((signerade / fragade) * 100).toFixed(1);
+
+    }
+
+    document.getElementById("konvertering")
+    .innerHTML = procent + "%";
+
+    sparaData();
+
+}
+
+function plusFragade(){
+
+    fragade++;
+    uppdatera();
+
+}
+
+function minusFragade(){
+
+    if(fragade > 0){
+
+        fragade--;
+        uppdatera();
+
+    }
+
+}
+
+function laggTillFragadeAntal(){
+
+    const antal =
+    parseInt(
+        document.getElementById(
+            "laggTillFragade"
+        ).value
+    );
+
+    if(isNaN(antal) || antal < 1){
+
+        alert("Ange ett antal större än 0.");
+        return;
+
+    }
+
+    fragade += antal;
+
+    document.getElementById(
+        "laggTillFragade"
+    ).value = "";
+
+    uppdatera();
+
+}
+
+function plusSignerade(){
+
+    signerade++;
+    uppdatera();
+
+}
+
+function minusSignerade(){
+
+    if(signerade > 0){
+
+        signerade--;
+        uppdatera();
+
+    }
+
+}
+
+function sparaRunda(){
+
+    const datum =
+    document.getElementById("datum").value;
+
+    let procent = 0;
+
+    if(fragade > 0){
+
+        procent =
+        ((signerade / fragade) * 100).toFixed(1);
+
+    }
+
+    rundor.unshift({
+
+        datum,
+        fragade,
+        signerade,
+        konvertering: procent
+
+    });
+
+    localStorage.setItem(
+        "rundor",
+        JSON.stringify(rundor)
+    );
+
+    fragade = 0;
+    signerade = 0;
+
+    uppdatera();
+    visaHistorik();
+
+}
+
+function exporteraCSV(){
+
+    if(rundor.length === 0){
+
+        alert("Inga rundor att exportera.");
+        return;
+
+    }
+
+    let csv =
+    "Datum;Frågade;Signerade;Konvertering (%)\n";
+
+    rundor.forEach(runda => {
+
+        csv +=
+        runda.datum + ";" +
+        runda.fragade + ";" +
+        runda.signerade + ";" +
+        runda.konvertering +
+        "\n";
+
+    });
+
+    const blob =
+    new Blob(
+        [csv],
+        {type:"text/csv;charset=utf-8;"}
+    );
+
+    const link =
+    document.createElement("a");
+
+    link.href =
+    URL.createObjectURL(blob);
+
+    link.download =
+    "saljrundor.csv";
+
+    link.click();
+
+}
+
+function raderaRunda(index){
+
+    if(confirm("Radera säljrundan?")){
+
+        rundor.splice(index,1);
+
+        localStorage.setItem(
+            "rundor",
+            JSON.stringify(rundor)
+        );
+
+        visaHistorik();
+
+    }
+
+}
+
+function raderaAllaRundor(){
+
+    if(confirm("Radera alla rundor?")){
+
+        rundor = [];
+
+        localStorage.removeItem("rundor");
+
+        visaHistorik();
+
+    }
+
+}
+
+function visaHistorik(){
+
+    let html = `
+    <div class="card">
+
+        <h2>Tidigare säljrundor</h2>
+
+        <button
+        class="reset"
+        onclick="raderaAllaRundor()">
+
+        🗑️ Radera alla rundor
+
+        </button>
+    `;
+
+    rundor.forEach((runda,index)=>{
+
+        html += `
+        <div class="runda">
+
+            <strong>${runda.datum}</strong>
+
+            <br><br>
+
+            Frågade: ${runda.fragade}<br>
+            Signerade: ${runda.signerade}<br>
+            Konvertering: ${runda.konvertering}%<br><br>
+
+            <button
+            class="radera"
+            onclick="raderaRunda(${index})">
+
+            🗑️ Radera
+
+            </button>
+
+        </div>
+        `;
+    });
+
+    html += "</div>";
+
+    document.getElementById("historik")
+    .innerHTML = html;
+
+}
+
+function aterstall(){
+
+    if(confirm("Nollställa aktuell runda?")){
+
+        fragade = 0;
+        signerade = 0;
+
+        uppdatera();
+
+    }
+
+}
+
+uppdatera();
+visaHistorik();
+
 </script>
+
 </body>
 </html>
