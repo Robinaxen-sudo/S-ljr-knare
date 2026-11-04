@@ -131,9 +131,20 @@ input[type="number"]{
 <h1>Säljräknare</h1>
 
 <div class="card">
+
     <h3>Datum för säljrunda</h3>
+
     <input type="date" id="datum">
+
+    <br><br>
+
+    <input
+        type="text"
+        id="plats"
+        placeholder="Plats (t.ex. Norrköping)">
+
 </div>
+
 
 <div class="card">
 
@@ -352,6 +363,10 @@ function sparaRunda(){
     const datum =
     document.getElementById("datum").value;
 
+const plats =
+document.getElementById("plats").value;
+    
+    
     let procent = 0;
 
     if(fragade > 0){
@@ -363,12 +378,14 @@ function sparaRunda(){
 
     rundor.unshift({
 
-        datum,
-        fragade,
-        signerade,
-        konvertering: procent
+    datum,
+    plats,
+    fragade,
+    signerade,
+    konvertering: procent
 
-    });
+});
+
 
     localStorage.setItem(
         "rundor",
@@ -393,7 +410,8 @@ function exporteraCSV(){
     }
 
     let csv =
-    "Datum;Frågade;Signerade;Konvertering (%)\n";
+"Datum;Plats;Frågade;Signerade;Konvertering (%)\n";
+
 
     rundor.forEach(runda => {
 
@@ -477,7 +495,12 @@ function visaHistorik(){
         html += `
         <div class="runda">
 
-            <strong>${runda.datum}</strong>
+          <strong>${runda.datum}</strong>
+
+<br>
+
+📍 ${runda.plats || "Ej angiven"}
+
 
             <br><br>
 
