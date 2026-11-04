@@ -10,7 +10,42 @@
 <h1>Säljräknare</h1>
 <div class="card"><h3>Datum för säljrunda</h3><input type="date" id="datum"></div>
 <div class="card"><h2>Frågade</h2><div id="fragade" class="siffra">0</div><button class="minus" onclick="minusFragade()">−</button><button class="plus" onclick="plusFragade()">+</button></div>
-<div class="card"><h2>Signerade</h2><div id="signerade" class="siffra">0</div><button class="minus" onclick="minusSignerade()">−</button><button class="plus" onclick="plusSignerade()">+</button></div>
+<div class="card">
+
+<h2 style="font-size:38px;">Frågade</h2>
+
+<div
+id="fragade"
+class="siffra"
+style="font-size:90px;">
+0
+</div>
+
+<button class="minus" onclick="minusFragade()">−</button>
+<button class="plus" onclick="plusFragade()">+</button>
+
+<br><br>
+
+<input
+type="number"
+id="laggTillFragade"
+placeholder="Antal personer"
+min="1"
+style="
+width:220px;
+padding:12px;
+font-size:22px;
+text-align:center;
+">
+
+<button
+class="plus"
+onclick="laggTillFragadeAntal()">
+Lägg till
+</button>
+
+</div>
+
 <div class="card"><h2>Konvertering</h2><div id="konvertering" class="siffra">0%</div></div>
 <button class="spara" onclick="sparaRunda()">💾 Spara säljrunda</button><br><br>
 <button class="reset" onclick="aterstall()">🔄 Återställ aktuell runda</button>
